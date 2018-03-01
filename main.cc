@@ -47,12 +47,21 @@ int main()
     std::cout << i << "/" << map.steps << std::endl;
     for (size_t j = 0; j < sizeve; ++j)
     {
-      if (vehicles[j].was_at_begin)
+      if (vehicles[j].current_ride == -1)
+        continue;
+      if (!vehicles[j].was_at_begin)
+      {
         if (move_to(map, vehicles[j], map.rides_vector[vehicles[j].current_ride].start_coord))
-          find_ride(map, vehicles[j], i);
+          vehicles[j].was_at_begin = true;
+      }
       else
+      {
         if (move_to(map, vehicles[j], map.rides_vector[vehicles[j].current_ride].end_coord))
+        {
           find_ride(map, vehicles[j], i);
+          vehicles[j].done_rides.push(vehicles[j].current_ride);
+        }
+      }
     }
   }
   Write w = Write(vehicles);

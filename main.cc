@@ -16,13 +16,16 @@ void find_ride(Map& map, Vehicle& vehicle, int step)
 int main()
 {
   Map map = parser();
-  std::vector<Vehicle> vehicles(map.vehicles);
-  for (size_t j = 0; j < vehicles.size(); ++j)
+  std::vector<Vehicle> vehicles;
+  for (size_t j = 0; j < map.vehicules; ++j)
+  {
+    vehicles.push_back(Vehicle());
     find_ride(map, vehicles[j], 0);
+  }
   for (int i = 0; i < map.steps; ++i)
   {
     std::cout << i << "/" << map.steps << std::endl;
-    for (size_t j = 0; j < vehicles.size(); ++j)
+    for (size_t j = 0; j < map.vehicules; ++j)
     {
       if (vehicles[j].was_at_begin)
       {

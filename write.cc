@@ -16,7 +16,7 @@ void Write::compute_res()
     std::string res= "result";
     std::string tmp_r(dt);
 
-    res += tmp_r;
+    //res += tmp_r;
     
     std::ofstream fichier(res, std::ios::out | std::ios::trunc); 
 
@@ -28,16 +28,21 @@ void Write::compute_res()
 	    if(tmp.done_rides.size() > 0)
 	    {
 		fichier << tmp.done_rides.size() << " ";
-		for(auto i = tmp.done_rides.begin(); i != tmp.done_rides.end(); ++i)
+        while(!tmp.done_rides.empty())
 		{
-		    if(i + 1 == tmp.done_rides.end())
-			fichier << *i << std::endl;
-		    else
-			fichier << *i << " ";
-		    
-		}
-	    }
-	}
+            if(tmp.done_rides.back() != tmp.done_rides.front())
+            {
+                fichier <<  tmp.done_rides.front() << " ";
+                tmp.done_rides.pop();
+            }
+            else
+            {
+                fichier << tmp.done_rides.front() << std::endl;
+	            tmp.done_rides.pop();
+            }
+        }
+        }
+        }
 	fichier.close();  // on referme le fichier
     }
     else  // sinon

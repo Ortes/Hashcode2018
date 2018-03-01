@@ -44,7 +44,10 @@ int main()
 
         if (map.rides_vector[vehicles[j].current_ride].start_coord[0] == vehicles[j].x
             && map.rides_vector[vehicles[j].current_ride].start_coord[1] == vehicles[j].y)
+        {
+          vehicles[j].push(vehicles[j].current_ride);
           find_ride(map, vehicles[j], i);
+        }
       }
     }
   }

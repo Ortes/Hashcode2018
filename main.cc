@@ -17,7 +17,8 @@ int main()
 {
   Map map = parser();
   std::vector<Vehicle> vehicles;
-  for (size_t j = 0; j < map.vehicules; ++j)
+  size_t sizeve = map.vehicules;
+  for (size_t j = 0; j < sizeve; ++j)
   {
     vehicles.push_back(Vehicle());
     find_ride(map, vehicles[j], 0);
@@ -25,7 +26,7 @@ int main()
   for (int i = 0; i < map.steps; ++i)
   {
     std::cout << i << "/" << map.steps << std::endl;
-    for (size_t j = 0; j < map.vehicules; ++j)
+    for (size_t j = 0; j < sizeve; ++j)
     {
       if (vehicles[j].was_at_begin)
       {

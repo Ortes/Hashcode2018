@@ -30,7 +30,7 @@ void Write::compute_res()
 		fichier << tmp.done_rides.size() << " ";
         while(!tmp.done_rides.empty())
 		{
-            if(tmp.done_rides.back() != tmp.done_rides.front())
+            if(tmp.done_rides.size() != 1)
             {
                 fichier <<  tmp.done_rides.front() << " ";
                 tmp.done_rides.pop();

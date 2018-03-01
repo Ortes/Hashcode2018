@@ -1,3 +1,6 @@
+
+class Ride;
+
 class Map
 {
 public:
@@ -8,7 +11,7 @@ public:
     int steps;
 
     std::vector<Ride>  rides_vector;
-  std::vector<Vehicle> vehicles;
+     std::vector<Vehicle> vehicles;
 };
 
 
@@ -33,3 +36,6 @@ public:
   std::queue<int> done_rides;
   bool is_riding;
 };
+
+
+Map parser(std::string path);

@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include "map.hh"
 #include "write.hh"
 
@@ -15,11 +16,12 @@ void find_ride(Map& map, Vehicle& vehicle, int step)
 int main()
 {
   Map map = parser();
-  std::vector<Vehicle> vehicles;
+  std::vector<Vehicle> vehicles(map.vehicles);
   for (size_t j = 0; j < vehicles.size(); ++j)
     find_ride(map, vehicles[j], 0);
   for (int i = 0; i < map.steps; ++i)
   {
+    std::cout << i << "/" << map.steps << std::endl;
     for (size_t j = 0; j < vehicles.size(); ++j)
     {
       if (vehicles[j].was_at_begin)

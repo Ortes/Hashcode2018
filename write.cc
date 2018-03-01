@@ -1,5 +1,6 @@
-#include "write.hh"
+#include <fstream>
 #include <ctime>
+#include "write.hh"
 
 
 Write::Write(std::vector<Vehicle> v)
@@ -17,11 +18,11 @@ void Write::compute_res()
 
     res += tmp_r;
     
-    ofstream fichier(res, ios::out | ios::trunc); 
+    std::ofstream fichier(res, std::ios::out | std::ios::trunc); 
 
     if(fichier)  // si l
     {
-	for(int i = 0; i < vehicles_.size(); ++i)
+	for(size_t i = 0; i < vehicles_.size(); ++i)
 	{
 	    auto tmp = vehicles_[i];
 	    if(tmp.done_rides.size() > 0)
@@ -40,5 +41,5 @@ void Write::compute_res()
 	fichier.close();  // on referme le fichier
     }
     else  // sinon
-	cerr << "Erreur à l'ouverture !" << endl;
+      std::cerr << "Erreur à l'ouverture !" << std::endl;
 }

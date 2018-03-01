@@ -1,9 +1,10 @@
- #include <vector>
+#pragma once
+
+#include <vector>
 #include <queue>
 
-
 class Ride;
-class Vehicule;
+class Vehicle;
 
 
 class Map
@@ -17,11 +18,8 @@ public:
     int steps;
     void print();
     std::vector<Ride>  rides_vector;
-    std::vector<Vehicule> vehicles;
+    std::vector<Vehicle> vehicles;
 };
-
-
-
 
 
 class Ride
@@ -32,16 +30,18 @@ public:
     std::vector<int>  end_coord;  
     int earliest_start; 
     int lastest_start;
+  bool taken = false;
 };
 
 
-class Vehicule
+class Vehicle
 {
 public:
-  int pos_x;
-  int pos_y;
+  int x = 0;
+  int y = 0;
   std::queue<int> done_rides;
-  bool is_riding;
+  bool was_at_begin = false;
+  int current_ride = -1;
 };
 
 

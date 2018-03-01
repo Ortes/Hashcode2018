@@ -6,11 +6,30 @@
 void find_ride(Map& map, Vehicle& vehicle, int step)
 {
   for (size_t i = 0; i < map.rides_vector.size(); ++i)
+  {
     if (!map.rides_vector[i].taken
         && map.rides_vector[i].start_coord[0] - vehicle.x
         + map.rides_vector[i].start_coord[1] - vehicle.y
         < map.rides_vector[i].earliest_start - step)
+    {
       vehicle.current_ride = i;
+      map.rides_vector[i].taken = true;
+      if (map.rides_vector[vehicle.current_ride].start_coord[0] == vehicle.x
+          && map.rides_vector[vehicle.current_ride].start_coord[1] == vehicle.y)
+        vehicle.was_at_begin = true;
+    }
+  }
+}
+
+bool move_to(Map& map, Vehicle& vehicle, std::vector<int>& pos)
+{
+  if (pos[0] != vehicle.x)
+    vehicle.x += pos[0] > vehicle.x ? 1 : -1;
+  if (pos[1] != vehicle.y)
+    vehicle.y += pos[1] > vehicle.y ? 1 : -1;
+  if (pos[0] == vehicle.x && pos[1] == vehicle.y)
+    return true;
+  return false;
 }
 
 int main()
@@ -29,32 +48,11 @@ int main()
     for (size_t j = 0; j < sizeve; ++j)
     {
       if (vehicles[j].was_at_begin)
-      {
-        if (map.rides_vector[vehicles[j].current_ride].end_coord[0] != vehicles[j].x)
-          vehicles[j].x += map.rides_vector[vehicles[j].current_ride].end_coord[0] > vehicles[j].x ? 1 : -1;
-      
-        if (map.rides_vector[vehicles[j].current_ride].end_coord[1] != vehicles[j].y)
-          vehicles[j].y += map.rides_vector[vehicles[j].current_ride].end_coord[1] > vehicles[j].y ? 1 : -1;
-
-        if (map.rides_vector[vehicles[j].current_ride].end_coord[0] == vehicles[j].x
-            && map.rides_vector[vehicles[j].current_ride].end_coord[1] == vehicles[j].y)
+        if (move_to(map, vehicles[j], map.rides_vector[vehicles[j].current_ride].start_coord))
           find_ride(map, vehicles[j], i);
-      }
       else
-      {
-        if (map.rides_vector[vehicles[j].current_ride].start_coord[0] != vehicles[j].x)
-          vehicles[j].x += map.rides_vector[vehicles[j].current_ride].start_coord[0] > vehicles[j].x ? 1 : -1;
-      
-        if (map.rides_vector[vehicles[j].current_ride].start_coord[1] != vehicles[j].y)
-          vehicles[j].y += map.rides_vector[vehicles[j].current_ride].start_coord[1] > vehicles[j].y ? 1 : -1;
-
-        if (map.rides_vector[vehicles[j].current_ride].start_coord[0] == vehicles[j].x
-            && map.rides_vector[vehicles[j].current_ride].start_coord[1] == vehicles[j].y)
-        {
-          vehicles[j].done_rides.push(vehicles[j].current_ride);
+        if (move_to(map, vehicles[j], map.rides_vector[vehicles[j].current_ride].end_coord))
           find_ride(map, vehicles[j], i);
-        }
-      }
     }
   }
   Write w = Write(vehicles);
